@@ -1,4 +1,4 @@
-class Transaction {
+export class Transaction {
   constructor(amount, account) {
     this.amount = amount;
     this.account = account;
@@ -10,14 +10,16 @@ class Transaction {
   }
 }
 
-class Withdrawal extends Transaction {
+export class Withdrawal extends Transaction {
   get value() {
     return -this.amount;
   }
 }
 
-class Deposit extends Transaction {
+export class Deposit extends Transaction {
   get value() {
     return this.amount;
   }
 }
+
+export default { Transaction, Withdrawal, Deposit };

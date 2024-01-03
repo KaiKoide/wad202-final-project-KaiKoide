@@ -1,4 +1,4 @@
-class Account {
+export class Account {
   constructor(username) {
     this.username = username;
     this.transactions = [];
@@ -10,3 +10,5 @@ class Account {
     }, 0);
   }
 }
+
+export default Account;

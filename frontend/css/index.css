@@ -1,0 +1,33 @@
+* {
+  color: #555 !important;
+}
+
+body {
+  background-color: #fffbe6 !important;
+  color: #555 !important;
+  font-family: 'Rubik Doodle Shadow', sans-serif !important;
+}
+
+button {
+  background-color: #98cce7 !important;
+  color: #555 !important;
+  border: 1px #555 solid !important;
+  box-shadow: 2px 2px 0 #555;
+}
+
+button:hover {
+  background-color: #8abad1 !important;
+  color: #fff !important;
+}
+
+th {
+  color: #555 !important;
+}
+
+ .transaction-form * {
+  margin: 3px;
+}
+
+.from, .to {
+  display: none;
+}
