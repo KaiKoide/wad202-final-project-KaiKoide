@@ -153,19 +153,32 @@ const displayTransactionsList = () => {
       accounts.push(account);
       const transactionDataList = user.transactions;
 
-      console.log(accounts);
-      console.log(account);
-      console.log(data);
-
       transactionDataList.forEach((transactionData) => {
-        console.log(transactionData);
         const numberOfTransactions = $('.transaction-list tr').length;
+        const formElements = document.forms[1];
+        const accountSelect = formElements.account;
 
         // category
-        const formElements = document.forms[1];
         const selectedCategoryElement = formElements.category;
+        // console.log(selectedCategoryElement);
         const selectedOption = selectedCategoryElement.querySelector(`option[id="${transactionData.categoryId}"]`);
-        const selectionValue = selectedOption ? selectedOption.value : undefined;
+        const selectionValue = selectedOption ? selectedOption.value : '';
+
+        // account from
+        console.count();
+        // console.log('accountSelect', accountSelect);
+        const selectedAccountSender = accountSelect.querySelector(`option[id="${transactionData.accountIdFrom}"]`);
+        console.log('transactionData.accountIdFrom', transactionData.accountIdFrom);
+        console.log('selectedAccountSender', selectedAccountSender);
+        const senderAccount = selectedAccountSender ?  selectedAccountSender.value : '';
+        console.log('senderAccount', senderAccount);
+
+        // account to
+        const selectedAccountReceiver = accountSelect.querySelector(`option[id="${transactionData.accountIdTo}"]`);
+        console.log('transactionData.accountIdTo', transactionData.accountIdTo);
+        console.log('selectedAccountReceiver', selectedAccountReceiver);
+        const receiverAccount = selectedAccountReceiver ?  selectedAccountReceiver.value : '';
+        console.log('receiverAccount', receiverAccount);
 
         // create element
         const tr = document.createElement('tr');
@@ -175,8 +188,8 @@ const displayTransactionsList = () => {
         const category = `<td>${selectionValue}</td>`;
         const description = `<td>${transactionData.description}</td>`;
         const amount = `<td>${transactionData.amount}</td>`;
-        const from = `<td>${transactionData.accountIdFrom}</td>`;
-        const to = `<td>${transactionData.accountIdTo}</td>`;
+        const from = `<td>${senderAccount}</td>`;
+        const to = `<td>${receiverAccount}</td>`;
         $(tr).append(id, username, transactionType, category, description, amount, from, to);
         $('.transaction-list').append(tr);
       });
