@@ -3,8 +3,8 @@ import { Withdrawal, Deposit } from './helpers/Transaction.js';
 import { displayOptions } from './helpers/Common.js';
 import { displayCategory, addCategory } from './helpers/Category.js';
 
-let storageList = [];
-const storage = localStorage;
+// let storageList = [];
+// const storage = localStorage;
 
 $(() => {
   //Start coding here!
@@ -130,20 +130,14 @@ const changeDisplayedElements = function() {
     $('.from').css('display', 'block');
     $('.to').css('display', 'block');
     $('.account').css('display', 'none');
-    $('.category').css('display', 'none');
   } else if (deposit || withdraw) {
     $('.from').css('display', 'none');
     $('.to').css('display', 'none');
     $('.account').css('display', 'block');
-    $('.category').css('display', 'block');
   }
 }
 
 const displayTransactionsList = () => {
-  // let storageList = JSON.parse(localStorage.getItem('storageList'));
-  // console.log('storageList', storageList);
-
-
   $.ajax({
     url:  'http://localhost:3000/accounts',
     method: 'GET'
@@ -166,20 +160,12 @@ const displayTransactionsList = () => {
         const selectionValue = selectedOption ? selectedOption.value : '';
 
         // account from
-        console.count();
-        // console.log('accountSelect', accountSelect);
         const selectedAccountSender = accountSelect.querySelector(`option[id="${transactionData.accountIdFrom}"]`);
-        console.log('transactionData.accountIdFrom', transactionData.accountIdFrom);
-        console.log('selectedAccountSender', selectedAccountSender);
         const senderAccount = selectedAccountSender ?  selectedAccountSender.value : '';
-        console.log('senderAccount', senderAccount);
 
         // account to
         const selectedAccountReceiver = accountSelect.querySelector(`option[id="${transactionData.accountIdTo}"]`);
-        console.log('transactionData.accountIdTo', transactionData.accountIdTo);
-        console.log('selectedAccountReceiver', selectedAccountReceiver);
         const receiverAccount = selectedAccountReceiver ?  selectedAccountReceiver.value : '';
-        console.log('receiverAccount', receiverAccount);
 
         // create element
         const tr = document.createElement('tr');
