@@ -3,6 +3,9 @@ import { Withdrawal, Deposit } from './helpers/Transaction.js';
 import { displayOptions } from './helpers/Common.js';
 import { displayCategory, addCategory } from './helpers/Category.js';
 
+let storageList = [];
+const storage = localStorage;
+
 $(() => {
   //Start coding here!
   const accountSelect = document.querySelector('.account-select');
@@ -76,7 +79,10 @@ const conductTransaction = () => {
     const amountBeforeCommit = accountUser.balance;
     transaction.commit();
     const amountAfterCommit = accountUser.balance;
-    if (amountBeforeCommit === amountAfterCommit) return;
+    if (amountBeforeCommit === amountAfterCommit) {
+      alert('The transaction has failed due to insufficient funds.');
+      return;
+    }
   } else {
     senderTransaction = new Withdrawal(amount, matchedSender);
     const amountBeforeCommit = matchedSender.balance;
@@ -103,22 +109,13 @@ const conductTransaction = () => {
       }
     })
   })
-  .done(data => {
-    console.log('success');
-    console.log('data', data);
-    const numberOfTransactions = $('.transaction-list tr').length;
+  .done(() => {
+    const transactionList = document.querySelector('.transaction-list');
+    while(transactionList.firstChild) {
+      transactionList.removeChild(transactionList.firstChild);
+    }
 
-    const tr = document.createElement('tr');
-    const id = `<td>${numberOfTransactions + 1}</td>`;
-    const username = `<td>${currentAccount ? currentAccount : sender }</td>`;
-    const transactionType = `<td>${selectedTransaction}</td>`;
-    const category = `<td>${selectedCategoryElement.options[selectedCategoryElement.selectedIndex].value}</td>`;
-    const description = `<td>${descriptionData}</td>`;
-    const amount = `<td>${transaction ? transaction.amount : senderTransaction.amount}</td>`;
-    const from = `<td>${sender}</td>`;
-    const to = `<td>${receiver}</td>`;
-    $(tr).append(id, username, transactionType, category, description, amount, from, to);
-    $('.transaction-list').append(tr);
+    displayTransactionsList();
   })
   .fail(() => {
     console.log('An error has occurred.');
@@ -143,6 +140,10 @@ const changeDisplayedElements = function() {
 }
 
 const displayTransactionsList = () => {
+  // let storageList = JSON.parse(localStorage.getItem('storageList'));
+  // console.log('storageList', storageList);
+
+
   $.ajax({
     url:  'http://localhost:3000/accounts',
     method: 'GET'
@@ -248,6 +249,8 @@ $('.transaction-button').click((e) => {
 
   conductTransaction();
   displayAccountSummary();
+
+  document.transactionForm.reset();
 });
 
 
